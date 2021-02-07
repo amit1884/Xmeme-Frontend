@@ -1,0 +1,23 @@
+*{
+    padding:0;
+    margin:0;
+    overflow-x: hidden;
+}
+.card-title{
+    overflow: hidden;
+    width:75%;
+}
+@media(max-width:991px){
+    .card-title{
+        overflow: hidden;
+        width:60%;
+    }
+}
+.card-body{
+    position: relative;
+}
+.edit_btn{
+    position:absolute;
+    top:10px;
+    right:30px;
+}
