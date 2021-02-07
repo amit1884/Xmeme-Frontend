@@ -3,6 +3,7 @@
     margin:0;
     overflow-x: hidden;
 }
+/* Card style */
 .card-title{
     overflow: hidden;
     width:75%;
@@ -21,3 +22,98 @@
     top:10px;
     right:30px;
 }
+
+
+/* Spinner Style */
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+
+
+  /* Scroll bar Style */
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: dodgerblue; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+
+  /* Modal Style */
+
+  .modal_container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height:100vh;
+      width:100%;
+      position: fixed;
+      top:0;
+      left:0;
+      z-index:10;
+      background-color: rgba(0,0,0,0.6);
+  }
+  .form_wrapper{
+    position: relative;
+    z-index: 20;
+  }
+  .edit_form{
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      width:500px;
+      padding:20px;
+      z-index: 20;
+  }
+
+  .close_btn{
+    position: absolute;
+    top:3%;
+    right:5%;
+    background-color: transparent;
+    color:#f1f1f1;
+    font-size: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    float:right;
+    border:1px solid #fff;
+    outline:none;
+    z-index: 40;
+    padding:10px 20px;
+    border-radius:5px;
+  }
+  .close_btn:hover{
+    background-color: #000;
+    border:none;
+  }
