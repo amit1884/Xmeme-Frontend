@@ -22,8 +22,8 @@ function EditForm({EditMeme,open,data,setData}) {
           </div>
           <div className="mb-3">
             <label htmlFor="meme_url" className="form-label">Meme URL</label>
-            <input type="text" placeholder="Enter URL of your meme here"className="form-control" name="image" id="meme_url"  
-            value={data.image} 
+            <input type="text" placeholder="Enter URL of your meme here"className="form-control" name="url" id="meme_url"  
+            value={data.url} 
             onChange={handleChange}
             />
           </div>

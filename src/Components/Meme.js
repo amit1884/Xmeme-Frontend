@@ -6,12 +6,21 @@ function Meme({Loading}) {
     // State variable to store the array memes fetched from database
     const [Memes,setMemes]=useState([])
     // State variable to store the number of memes to fetched from data base
-    const [Limit,setLimit]=useState(2)
+    const [Limit,setLimit]=useState(100)
+    // State variable to keep track of fetching the meme
     const [Fetching,setFetching]=useState(false)
+    // Variable to open and close the modal
     const [open,setopen]=useState(false)
+    // Variable to store the sing meme when edit button is clicked
     const [Data,setData]=useState({})
+    // Variable to detect error
     const [Error,setError]=useState(false)
+    // Variable to show messages
     const [Message,setMessage]=useState('')
+     // State variable to keep track of updating the meme
+    const [updating,setupdating]=useState(false)
+
+    const [Last,IsLast]=useState(false)
     // UseEffect function to fetch the memes from the backend
     // It runs whenever the loading or limit variable changes state
     useEffect(()=>{
@@ -27,6 +36,8 @@ function Meme({Loading}) {
             console.log(result)
             setMemes(result.docs)
             setFetching(false)
+            if(result.pages===1)
+            IsLast(true)
             })
         .catch(error => console.log('error', error));
     },[Loading,Limit,open])
@@ -41,14 +52,14 @@ function Meme({Loading}) {
     // Function to edit memes
   const EditMeme=(e)=>{
       e.preventDefault()
-
+    setupdating(true)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({"caption":Data.caption,"image":Data.image});
+    var raw = JSON.stringify({"caption":Data.caption,"image":Data.url});
 
     var requestOptions = {
-    method: 'POST',
+    method: 'PATCH',
     headers: myHeaders,
     body: raw,
     redirect: 'follow'
@@ -57,19 +68,38 @@ function Meme({Loading}) {
     fetch(`http://localhost:8080/memes/${Data._id}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-        setopen(false)
         console.log(result)
+        setopen(false)
+        if(result.status===204)
+        setMessage('!! Updated Successfully !!')
+        else if(result.status===404)
+        {
+            setError(true)
+            setMessage('!! Id Not Found !!')
+        }
+        setupdating(false)
     })
     .catch(error => console.log('error', error));
   }
 
+//   Function to hide the messages after 2s.
+  useEffect(()=>{
+    setTimeout(()=>{
+        setMessage('')
+        setError(false)
+    },2000)
+  },[updating])
+
     return (
         <div style={{height:'300px'}}>
+            <div className="text-center">
+                <p style={Error?{color:'red'}:{color:'green'}}> {Message}</p>
+            </div>
             {
                 Memes.length===0?
                 <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',flexDirection:'column'}}>
                     <p>No Memes uploaded</p>
-                    <p>(Be the first to upload {':)'})</p>
+                    <p>(Be the first one to upload {':)'})</p>
                     <Spinner/>
                 </div>
                 :
@@ -78,13 +108,18 @@ function Meme({Loading}) {
                         <div className="card" key={index}>
                         <div className="card-body">
                             <div style={{display:'flex',justifyContent:'flex-start'}}>
-                            <h5 className="card-title">{items.owner}</h5>
+                            <h5 className="card-title">{items.name}</h5>
                             <span style={{fontSize:'16px',color:'gray'}}>
-                                {new Date(items.last_modified).getHours()>12?(new Date(items.last_modified).getHours()-12+':'+new Date(items.last_modified).getMinutes()+' PM'):new Date(items.last_modified).getHours()+':'+new Date(items.last_modified).getMinutes()+' AM'}</span>
+                                {
+                                new Date(items.last_modified).getHours()>12
+                                ?(new Date(items.last_modified).getHours()-12+':'+new Date(items.last_modified).getMinutes()+' PM')
+                                :new Date(items.last_modified).getHours()+':'+new Date(items.last_modified).getMinutes()+' AM'
+                                }
+                            </span>
                             </div>
                             <button className="edit_btn btn btn-warning" onClick={()=>openModal(items)}>Edit</button>
                             <p className="card-text">{items.caption}</p>
-                            <img src={items.image} className="card-img-top" alt="..."/>
+                            <img src={items.url} className="card-img-top" alt="..."/>
                         </div>
                         </div>
                     )
@@ -92,9 +127,9 @@ function Meme({Loading}) {
             }
             <br/>
             {
-                Memes.length>0?
+                Memes.length>0&&!Last?
                 <div style={{display:'flex',justifyContent:'center'}}>
-                <button className="btn btn-primary" onClick={()=>setLimit(Limit+2)}>
+                <button className="btn btn-primary" onClick={()=>setLimit(Limit+100)}>
                     {Fetching?'Loading..':'Load More'}
                 </button>
                 </div>
@@ -110,6 +145,7 @@ function Meme({Loading}) {
                 />
                 :null
             }
+
         </div>
         )    
 }

@@ -16,7 +16,7 @@ function App() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var data = JSON.stringify({"owner":Name,"caption":Caption,"image":Image});
+    var data = JSON.stringify({"name":Name,"caption":Caption,"url":Image});
 
       var requestOptions = {
         method: 'POST',
@@ -31,12 +31,16 @@ function App() {
           console.log(result)
           if(result.status)
           {
+            console.log(result)
             IsError(true)
-            setMessage(data)
+            setMessage('Duplicate values exists')
           }
           else if(result.id)
           {
             setMessage('Uploaded Meme Successfully !!')
+            setName('')
+            setCaption('')
+            setImage('')
           }
           setLoading(false)
         })
@@ -66,7 +70,7 @@ function App() {
             <label htmlFor="meme_url" className="form-label">Meme URL</label>
             <input type="text" placeholder="Enter URL of your meme here"className="form-control" id="meme_url"  required value={Image} onChange={(e)=>setImage(e.target.value)}/>
           </div>
-          <button type="submit" className="btn btn-primary">Submit Meme</button>
+          <button type="submit" className="btn btn-primary">{Loading?'Loading...':'Submit meme'}</button>
           &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style={Error?{color:'red'}:{color:'green'}}>{Message}</span>
         </form>
         </div>
