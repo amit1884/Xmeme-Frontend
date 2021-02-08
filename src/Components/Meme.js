@@ -112,8 +112,8 @@ function Meme({Loading}) {
                             <span style={{fontSize:'16px',color:'gray'}}>
                                 {
                                 new Date(items.last_modified).getHours()>12
-                                ?(new Date(items.last_modified).getHours()-12+':'+new Date(items.last_modified).getMinutes()+' PM')
-                                :new Date(items.last_modified).getHours()+':'+new Date(items.last_modified).getMinutes()+' AM'
+                                ?(new Date(items.last_modified).getHours()-12+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes():'0'+new Date(items.last_modified).getMinutes())+' PM')
+                                :new Date(items.last_modified).getHours()+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes()>10:'0'+new Date(items.last_modified).getMinutes())+' AM'
                                 }
                             </span>
                             </div>
