@@ -18,6 +18,7 @@ function EditForm({EditMeme,open,data,setData}) {
             <input type="text" placeholder="Be creative with the caption"className="form-control" name="caption"id="caption"  
             value={data.caption} 
             onChange={handleChange}
+            required
             />
           </div>
           <div className="mb-3">
@@ -25,6 +26,7 @@ function EditForm({EditMeme,open,data,setData}) {
             <input type="text" placeholder="Enter URL of your meme here"className="form-control" name="url" id="meme_url"  
             value={data.url} 
             onChange={handleChange}
+            required
             />
           </div>
           <button type="submit" className="btn btn-primary">Submit</button>
