@@ -1,6 +1,7 @@
 import React ,{useState,useEffect}from 'react'
 import Spinner from './Spinner'
 import EditForm from './EditForm'
+const Backend_URL='https://xmemeendpoint.herokuapp.com/'
 function Meme({Loading}) {
 
     // State variable to store the array memes fetched from database
@@ -29,7 +30,7 @@ function Meme({Loading}) {
         redirect: 'follow'
         };
         setFetching(true)
-        fetch(`http://localhost:8080/memes?limit=${Limit}`, requestOptions)
+        fetch(`${Backend_URL}memes?limit=${Limit}`, requestOptions)
         .then(response => response.json())
         .then(result => 
             {
@@ -65,10 +66,10 @@ function Meme({Loading}) {
     redirect: 'follow'
     };
 
-    fetch(`http://localhost:8080/memes/${Data._id}`, requestOptions)
+    fetch(`${Backend_URL}memes/${Data._id}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-        console.log(result)
+        // console.log(result)
         setopen(false)
         if(result.status===204)
         setMessage('!! Updated Successfully !!')
@@ -105,7 +106,7 @@ function Meme({Loading}) {
                 :
                 Memes.map((items,index)=>{
                     return(
-                        <div className="card" key={index}>
+                        <div className="card" key={index} style={{marginBottom:'10px'}}>
                         <div className="card-body">
                             <div style={{display:'flex',justifyContent:'flex-start'}}>
                             <h5 className="card-title">{items.name}</h5>
@@ -113,13 +114,13 @@ function Meme({Loading}) {
                                 {
                                 new Date(items.last_modified).getHours()>12
                                 ?(new Date(items.last_modified).getHours()-12+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes():'0'+new Date(items.last_modified).getMinutes())+' PM')
-                                :new Date(items.last_modified).getHours()+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes()>10:'0'+new Date(items.last_modified).getMinutes())+' AM'
+                                :new Date(items.last_modified).getHours()+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes():'0'+new Date(items.last_modified).getMinutes())+' AM'
                                 }
                             </span>
                             </div>
-                            <button className="edit_btn btn btn-warning" onClick={()=>openModal(items)}>Edit</button>
+                            <button className="edit_btn btn btn-warning" onClick={()=>openModal(items)}>Edit&nbsp;&nbsp;<i className="fa fa-pencil"></i></button>
                             <p className="card-text">{items.caption}</p>
-                            <img src={items.url} className="card-img-top" alt="..."/>
+                            <img src={items.url} className="card-img-top" alt=" Not available"/>
                         </div>
                         </div>
                     )

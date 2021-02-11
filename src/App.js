@@ -1,6 +1,7 @@
 import React ,{useState,useEffect}from 'react'
 import './App.css'
 import Meme from './Components/Meme'
+const Backend_URL='https://xmemeendpoint.herokuapp.com/'
 function App() {
   // Form field variables
   const [Name,setName]=useState('')
@@ -25,7 +26,7 @@ function App() {
         redirect: 'follow'
       };
 
-      fetch(`http://localhost:8080/memes`, requestOptions)
+      fetch(`${Backend_URL}memes`, requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -66,12 +67,14 @@ function App() {
             <label htmlFor="caption" className="form-label">Caption</label>
             <input type="text" placeholder="Be creative with the caption"className="form-control" id="caption"  required value={Caption} onChange={(e)=>setCaption(e.target.value)}/>
           </div>
-          <div className="mb-3">
-            <label htmlFor="meme_url" className="form-label">Meme URL</label>
+          <label htmlFor="meme_url" className="form-label">Meme URL</label>
+          <div className="input-group mb-3">
             <input type="text" placeholder="Enter URL of your meme here"className="form-control" id="meme_url"  required value={Image} onChange={(e)=>setImage(e.target.value)}/>
+            <div className="input-group-append">
+            <button type="submit" style={{background:'dodgerblue',color:'#fff'}}className="btn btn-primary input-group-text">{Loading?'Loading...':'Submit meme'}</button>
+            </div>
           </div>
-          <button type="submit" className="btn btn-primary">{Loading?'Loading...':'Submit meme'}</button>
-          &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style={Error?{color:'red'}:{color:'green'}}>{Message}</span>
+          <span style={Error?{color:'red'}:{color:'green'}}>{Message}</span>
         </form>
         </div>
       </div>

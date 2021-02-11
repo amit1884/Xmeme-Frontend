@@ -11,7 +11,8 @@
 @media(max-width:991px){
     .card-title{
         overflow: hidden;
-        width:60%;
+        width:50%;
+        font-size: 18px;
     }
 }
 .card-body{
@@ -116,4 +117,17 @@
   .close_btn:hover{
     background-color: #000;
     border:none;
+  }
+
+  .card-img-top{
+
+    width:400px;
+  }
+
+  @media(max-width:991px)
+  {
+    .card-img-top{
+
+      width:100%
+    }
   }
