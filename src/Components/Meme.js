@@ -1,8 +1,8 @@
 import React ,{useState,useEffect}from 'react'
 import Spinner from './Spinner'
 import EditForm from './EditForm'
-// const Backend_URL='https://xmemeendpoint.herokuapp.com/'
-const Backend_URL='http://localhost:8081/'
+const Backend_URL='https://xmemeendpoint.herokuapp.com/'
+// const Backend_URL='http://localhost:8081/'
 function Meme({Loading}) {
 
     // State variable to store the array memes fetched from database
