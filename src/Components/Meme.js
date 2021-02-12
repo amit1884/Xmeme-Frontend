@@ -21,8 +21,10 @@ function Meme({Loading}) {
     const [Message,setMessage]=useState('')
      // State variable to keep track of updating the meme
     const [updating,setupdating]=useState(false)
-
+    // To check the end of the meme list for showing or hiding Load More button
     const [Last,IsLast]=useState(false)
+
+
     // UseEffect function to fetch the memes from the backend
     // It runs whenever the loading or limit variable changes state
     useEffect(()=>{
@@ -91,6 +93,8 @@ function Meme({Loading}) {
         setError(false)
     },2000)
   },[updating])
+
+
 
     return (
         <div style={{height:'300px'}}>

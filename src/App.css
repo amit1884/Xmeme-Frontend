@@ -186,3 +186,9 @@ body{
     box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
     color:#000
   }
+
+  .like_wrapper{
+    margin-top:15px;
+    font-size: 17px;
+    cursor: pointer;
+  }
