@@ -1,7 +1,8 @@
 import React ,{useState,useEffect}from 'react'
 import Spinner from './Spinner'
 import EditForm from './EditForm'
-const Backend_URL='https://xmemeendpoint.herokuapp.com/'
+// const Backend_URL='https://xmemeendpoint.herokuapp.com/'
+const Backend_URL='http://localhost:8081/'
 function Meme({Loading}) {
 
     // State variable to store the array memes fetched from database
@@ -106,7 +107,7 @@ function Meme({Loading}) {
                 :
                 Memes.map((items,index)=>{
                     return(
-                        <div className="card" key={index} style={{marginBottom:'10px'}}>
+                        <div className="card" key={index} >
                         <div className="card-body">
                             <div style={{display:'flex',justifyContent:'flex-start'}}>
                             <h5 className="card-title">{items.name}</h5>

@@ -1,7 +1,10 @@
 import React ,{useState,useEffect}from 'react'
 import './App.css'
 import Meme from './Components/Meme'
-const Backend_URL='https://xmemeendpoint.herokuapp.com/'
+import Header from './Components/Header'
+import SwaggerButton from './Components/SwaggerButton'
+// const Backend_URL='https://xmemeendpoint.herokuapp.com/'
+const Backend_URL='http://localhost:8081/'
 function App() {
   // Form field variables
   const [Name,setName]=useState('')
@@ -53,12 +56,14 @@ function App() {
     },2000)
   },[Error,Loading])
     return (
-    <div className="conatiner">
+    <div className="conatiner-fluid">
+      <Header/>
+      <br/>
       <div className="row">
         <div className="col-sm-12 col-md-3"></div>
         <div className="col-sm-12 col-md-6">
-          <h3 style={{overflow:'hidden'}}>MEME STREAM</h3>
-        <form style={{padding:'5px'}} className="meme_form" onSubmit={UploadMeme}>
+          <h3 style={{overflow:'hidden',color:'#fff'}}>&nbsp;&nbsp;&nbsp;Add Meme</h3>
+        <form  className="meme_form" onSubmit={UploadMeme}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">Meme Owner</label>
             <input type="text" placeholder="Enter your full name"className="form-control" id="name" required value={Name} onChange={(e)=>setName(e.target.value)}/>
@@ -85,6 +90,7 @@ function App() {
           <Meme Loading={Loading}/>
         </div>
       </div>
+      <SwaggerButton/>
     </div>
   );
 }

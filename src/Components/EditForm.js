@@ -13,6 +13,13 @@ function EditForm({EditMeme,open,data,setData}) {
             <button className="close_btn"onClick={()=>open(false)}>X</button>
             <div className="form_wrapper">
             <form className="edit_form" onSubmit={EditMeme}>
+            <div className="mb-3">
+            <label htmlFor="name" className="form-label">Name</label>
+            <input type="text" placeholder="Full Name"className="form-control" name="name"id="name"  
+            value={data.name} 
+            disabled
+            />
+          </div>
           <div className="mb-3">
             <label htmlFor="caption" className="form-label">Caption</label>
             <input type="text" placeholder="Be creative with the caption"className="form-control" name="caption"id="caption"  
