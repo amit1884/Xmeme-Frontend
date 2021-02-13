@@ -103,7 +103,7 @@ function Meme({Loading}) {
             </div>
             {
                 Memes.length===0?
-                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',flexDirection:'column'}}>
+                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',flexDirection:'column',color:'#fff'}}>
                     <p>No Memes uploaded</p>
                     <p>(Be the first one to upload {':)'})</p>
                     <Spinner/>
