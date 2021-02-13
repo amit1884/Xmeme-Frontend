@@ -6,7 +6,7 @@ const Backend_URL='https://xmemeendpoint.herokuapp.com/'
 function Meme({Loading}) {
 
     // State variable to store the array memes fetched from database
-    const [Memes,setMemes]=useState([])
+    const [Memes,setMemes]=useState(undefined)
     // State variable to store the number of memes to fetched from data base
     const [Limit,setLimit]=useState(100)
     // State variable to keep track of fetching the meme
@@ -60,7 +60,7 @@ function Meme({Loading}) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({"caption":Data.caption,"image":Data.url});
+    var raw = JSON.stringify({"caption":Data.caption,"url":Data.url});
 
     var requestOptions = {
     method: 'PATCH',
@@ -93,52 +93,68 @@ function Meme({Loading}) {
         setError(false)
     },2000)
   },[updating])
-
-
-
+  
     return (
         <div style={{height:'300px'}}>
             <div className="text-center">
                 <p style={Error?{color:'red'}:{color:'green'}}> {Message}</p>
             </div>
             {
-                Memes.length===0?
-                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',flexDirection:'column',color:'#fff'}}>
-                    <p>No Memes uploaded</p>
-                    <p>(Be the first one to upload {':)'})</p>
-                    <Spinner/>
-                </div>
+                // If memes are fetched
+                Memes?
+                <>
+                    {
+                        Memes.length>0?
+                        <>
+                        {
+                             Memes.map((items,index)=>{
+                                return(
+                                    // Card to show the memes
+                                    <div className="card" key={index} >
+                                        <div className="card-body">
+                                            <div style={{display:'flex',justifyContent:'flex-start'}}>
+                                            <h5 className="card-title">{items.name}</h5>
+                                            <span style={{fontSize:'16px',color:'gray'}}>
+                                                {
+                                                new Date(items.last_modified).getHours()>12
+                                                ?(new Date(items.last_modified).getHours()-12+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes():'0'+new Date(items.last_modified).getMinutes())+' PM')
+                                                :new Date(items.last_modified).getHours()+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes():'0'+new Date(items.last_modified).getMinutes())+' AM'
+                                                }
+                                            </span>
+                                            </div>
+                                            <button className="edit_btn btn btn-warning" onClick={()=>openModal(items)}>Edit&nbsp;&nbsp;<i className="fa fa-pencil"></i></button>
+                                            <p className="card-text">{items.caption}</p>
+                                            <img src={items.url} className="card-img-top" alt=" Not available"/>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        </>
+                        :
+                        <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',flexDirection:'column',color:'#fff'}}>
+                        <p>No Memes uploaded</p>
+                        <p>(Be the first one to upload {':)'})</p>
+                        </div>
+                    }
+                </>
                 :
-                Memes.map((items,index)=>{
-                    return(
-                        <div className="card" key={index} >
-                        <div className="card-body">
-                            <div style={{display:'flex',justifyContent:'flex-start'}}>
-                            <h5 className="card-title">{items.name}</h5>
-                            <span style={{fontSize:'16px',color:'gray'}}>
-                                {
-                                new Date(items.last_modified).getHours()>12
-                                ?(new Date(items.last_modified).getHours()-12+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes():'0'+new Date(items.last_modified).getMinutes())+' PM')
-                                :new Date(items.last_modified).getHours()+':'+(new Date(items.last_modified).getMinutes()>10?new Date(items.last_modified).getMinutes():'0'+new Date(items.last_modified).getMinutes())+' AM'
-                                }
-                            </span>
-                            </div>
-                            <button className="edit_btn btn btn-warning" onClick={()=>openModal(items)}>Edit&nbsp;&nbsp;<i className="fa fa-pencil"></i></button>
-                            <p className="card-text">{items.caption}</p>
-                            <img src={items.url} className="card-img-top" alt=" Not available"/>
-                        </div>
-                        </div>
-                    )
-                })
+                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',background:'#fff',borderRadius:'20px',flexDirection:'column',overflow:'hidden'}}>
+                    <Spinner/>
+                    <br/>
+                    <h3 style={{overflow:'hidden'}}>Loading...</h3>
+                </div>
             }
             <br/>
             {
+                Memes?
                 Memes.length>0&&!Last?
                 <div style={{display:'flex',justifyContent:'center'}}>
                 <button className="btn btn-primary" onClick={()=>setLimit(Limit+100)}>
                     {Fetching?'Loading..':'Load More'}
                 </button>
                 </div>
+            :null
             :null
             }
             {
@@ -151,7 +167,6 @@ function Meme({Loading}) {
                 />
                 :null
             }
-
         </div>
         )    
 }
