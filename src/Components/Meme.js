@@ -93,6 +93,7 @@ function Meme({Loading}) {
         setError(false)
     },2000)
   },[updating])
+
   
     return (
         <div style={{height:'300px'}}>
@@ -132,14 +133,14 @@ function Meme({Loading}) {
                         }
                         </>
                         :
-                        <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',flexDirection:'column',color:'#fff'}}>
+                        <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'200px',flexDirection:'column',color:'#000',background:'#fff',borderRadius:'20px',}}>
                         <p>No Memes uploaded</p>
                         <p>(Be the first one to upload {':)'})</p>
                         </div>
                     }
                 </>
                 :
-                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'300px',background:'#fff',borderRadius:'20px',flexDirection:'column',overflow:'hidden'}}>
+                <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'200px',background:'#fff',borderRadius:'20px',flexDirection:'column',overflow:'hidden'}}>
                     <Spinner/>
                     <br/>
                     <h3 style={{overflow:'hidden'}}>Loading...</h3>
